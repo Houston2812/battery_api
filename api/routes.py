@@ -26,7 +26,7 @@ def api_filter():
     device_name = query_params.get('device_name')
     
     laptop = Laptop.query.filter_by(device_name = device_name).first_or_404()   
-J
+
     if laptop is not None:
         print(laptop.get_dict())
         return jsonify(laptop.get_dict())
