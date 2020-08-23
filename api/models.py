@@ -6,7 +6,7 @@ class Laptop(db.Model):
     device_name = db.Column(db.String(60), unique = False, nullable = False)
     power = db.Column(db.String(10), unique = False, nullable = True)
     percentage = db.Column(db.Integer, unique = False, nullable = True)
-    status = db.Column(db.Boolean, nullable = False, default = False)
+    status = db.Column(db.Boolean, nullable = False, default = True)
 
     def __repr__(self):
         return f"ID : {self.id}\nDevice name : {self.device_name}\nPower : {self.power}\nPercentage : {self.percentage}\nStatus : {self.status}\n"
