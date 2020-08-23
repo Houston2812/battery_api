@@ -26,7 +26,7 @@ def api_filter():
     device_name = query_params.get('device_name')
     
     laptop = Laptop.query.filter_by(device_name = device_name).first_or_404()   
-
+J
     if laptop is not None:
         print(laptop.get_dict())
         return jsonify(laptop.get_dict())
@@ -64,9 +64,15 @@ def api_update():
         device.percentage = percentage
         db.session.commit()
 
-        return  jsonify({'result': True})
+        return  jsonify({
+            'result': True,
+            'status': device.status
+            })
     else:
-        return  jsonify({'result': False})
+        return  jsonify({
+            'result': False,
+            'status': device.status
+            })
 
         
 @app.route('/api/v1/resources/laptops/<device_name>', methods = ["DELETE"])
@@ -76,3 +82,23 @@ def api_delete(device_name):
     db.session.commit()
     return jsonify({'result': True})
 
+
+@app.route('/api/v1/resources/laptops/status', methods = ['POST'])
+def stop_continue():
+    if request.is_json:
+        print(request.get_json())
+        content = request.get_json()
+        device_name = content['device_name']
+        status = content['status']
+        device = Laptop.query.filter_by(device_name = device_name).first_or_404()
+        if status == "0":
+            device.status = False
+            db.session.commit()
+        elif status == "1":
+            device.status = True
+            db.session.commit()
+    return jsonify({'result': True}), 202
+
+
+        
+    
