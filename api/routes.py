@@ -13,11 +13,6 @@ def page_not_found(e):
     return render_template("error.html")
 
 
-@app.route('/api/v1/resources/laptops/all', methods = ["GET"])
-def api_all():
-    return jsonify({'Laptops': list(map(lambda lap: lap.get_dict(), Laptop.query.all()))})
-
-
 @app.route('/api/v1/resources/laptops', methods = ["GET"])
 def api_filter():
     
